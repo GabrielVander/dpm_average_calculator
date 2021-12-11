@@ -1,4 +1,4 @@
-import 'package:dpm_average_calculator/main_page.dart';
+import 'package:dpm_average_calculator/presentation/widgets/main_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {

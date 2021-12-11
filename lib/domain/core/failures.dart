@@ -1,0 +1,3 @@
+class ValueFailure<T> {
+  ValueFailure();
+}
