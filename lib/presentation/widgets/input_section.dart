@@ -26,10 +26,19 @@ class InputSection extends StatelessWidget {
             SizedBox(
               height: widgetSpacing,
             ),
-            const TextField(
+            TextField(
+              onChanged: (input) =>
+                  context.read<CalculatorCubit>().onEmailChange(input),
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 labelText: 'Email',
+                errorText: state.showErrorMessages!
+                    ? state.emailAddress!.value.fold(
+                        (failure) =>
+                            getEmailErrorMessage(failure as EmailValueFailure),
+                        (r) => null,
+                      )
+                    : null,
               ),
             ),
             SizedBox(

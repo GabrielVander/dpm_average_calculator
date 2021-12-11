@@ -12,4 +12,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       showErrorMessages: true,
     ));
   }
+
+  void onEmailChange(String input) {
+    emit(state.copyWith(
+      emailAddress: EmailAddress(input),
+      showErrorMessages: true,
+    ));
+  }
 }
