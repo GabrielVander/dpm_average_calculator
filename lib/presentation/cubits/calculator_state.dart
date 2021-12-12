@@ -9,6 +9,7 @@ abstract class CalculatorState with _$CalculatorState {
   const factory CalculatorState({
     @required Name? name,
     @required EmailAddress? emailAddress,
+    @required List<Grade>? grades,
     @required bool? showErrorMessages,
     @required bool? isCalculating,
   }) = _CalculatorState;
@@ -16,6 +17,11 @@ abstract class CalculatorState with _$CalculatorState {
   factory CalculatorState.initial() => CalculatorState(
         name: Name(''),
         emailAddress: EmailAddress(''),
+        grades: [
+          Grade(''),
+          Grade(''),
+          Grade(''),
+        ],
         showErrorMessages: false,
         isCalculating: false,
       );

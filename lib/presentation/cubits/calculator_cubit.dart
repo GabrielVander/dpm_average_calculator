@@ -19,4 +19,11 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       showErrorMessages: true,
     ));
   }
+
+  onGradeChange(Grade grade, String input) {
+    emit(state.copyWith(
+      grades: state.grades!.map((e) => e == grade ? Grade(input) : e).toList(),
+      showErrorMessages: true,
+    ));
+  }
 }

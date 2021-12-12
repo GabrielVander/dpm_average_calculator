@@ -35,37 +35,31 @@ class InputSection extends StatelessWidget {
             ),
             Row(
               children: [
-                const Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '1st Grade',
-                    ),
+                Expanded(
+                  child: GradeInput(
+                    labelText: '1st Grade',
+                    showErrorMessages: state.showErrorMessages!,
+                    grade: state.grades![0],
                   ),
                 ),
                 SizedBox(
                   width: widgetSpacing,
                 ),
-                const Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '2nd Grade',
-                    ),
+                Expanded(
+                  child: GradeInput(
+                    labelText: '2nd Grade',
+                    showErrorMessages: state.showErrorMessages!,
+                    grade: state.grades![1],
                   ),
                 ),
                 SizedBox(
                   width: widgetSpacing,
                 ),
-                const Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '3rd Grade',
-                    ),
+                Expanded(
+                  child: GradeInput(
+                    labelText: '3rd Grade',
+                    showErrorMessages: state.showErrorMessages!,
+                    grade: state.grades![2],
                   ),
                 )
               ],
@@ -166,6 +160,53 @@ class EmailInput extends StatelessWidget {
       return 'Invalid email';
     } else {
       return 'Unknown email failure';
+    }
+  }
+}
+
+class GradeInput extends StatelessWidget {
+  final String labelText;
+  final bool showErrorMessages;
+  final Grade grade;
+
+  const GradeInput({
+    Key? key,
+    required this.labelText,
+    required this.showErrorMessages,
+    required this.grade,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      keyboardType: TextInputType.number,
+      onChanged: (input) =>
+          context.read<CalculatorCubit>().onGradeChange(grade, input),
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: labelText,
+        errorText: showErrorMessages
+            ? grade.value.fold(
+                (failure) =>
+                    _getGradeErrorMessage(failure as GradeValueFailure),
+                (r) => null,
+              )
+            : null,
+      ),
+    );
+  }
+
+  String? _getGradeErrorMessage(GradeValueFailure failure) {
+    if (failure is EmptyGrade) {
+      return 'Grade must be set';
+    } else if (failure is InvalidGrade) {
+      return 'Invalid grade';
+    } else if (failure is GradeAboveMaxLimit) {
+      return 'Grade above limit';
+    } else if (failure is GradeBelowMinLimit) {
+      return 'Grade below limit';
+    } else {
+      return 'Unknown grade failure';
     }
   }
 }
