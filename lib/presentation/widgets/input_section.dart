@@ -26,20 +26,9 @@ class InputSection extends StatelessWidget {
             SizedBox(
               height: widgetSpacing,
             ),
-            TextField(
-              onChanged: (input) =>
-                  context.read<CalculatorCubit>().onEmailChange(input),
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: 'Email',
-                errorText: state.showErrorMessages!
-                    ? state.emailAddress!.value.fold(
-                        (failure) =>
-                            getEmailErrorMessage(failure as EmailValueFailure),
-                        (r) => null,
-                      )
-                    : null,
-              ),
+            EmailInput(
+              showErrorMessages: state.showErrorMessages!,
+              emailAddress: state.emailAddress!,
             ),
             SizedBox(
               height: widgetSpacing,
@@ -102,16 +91,6 @@ class InputSection extends StatelessWidget {
       },
     );
   }
-
-  String getEmailErrorMessage(EmailValueFailure failure) {
-    if (failure is EmptyEmail) {
-      return 'Email must be set';
-    } else if (failure is InvalidEmail) {
-      return 'Invalid email';
-    } else {
-      return 'Unknown email failure';
-    }
-  }
 }
 
 class NameInput extends StatelessWidget {
@@ -147,6 +126,46 @@ class NameInput extends StatelessWidget {
     }
     if (failure is NameAboveMaxLimit) {
       return 'Name exceeding the maximum allowed characters';
+    }
+  }
+}
+
+class EmailInput extends StatelessWidget {
+  final bool showErrorMessages;
+  final EmailAddress emailAddress;
+
+  const EmailInput({
+    Key? key,
+    required this.showErrorMessages,
+    required this.emailAddress,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onChanged: (input) =>
+          context.read<CalculatorCubit>().onEmailChange(input),
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: 'Email',
+        errorText: showErrorMessages
+            ? emailAddress.value.fold(
+                (failure) =>
+                    _getEmailErrorMessage(failure as EmailValueFailure),
+                (r) => null,
+              )
+            : null,
+      ),
+    );
+  }
+
+  String _getEmailErrorMessage(EmailValueFailure failure) {
+    if (failure is EmptyEmail) {
+      return 'Email must be set';
+    } else if (failure is InvalidEmail) {
+      return 'Invalid email';
+    } else {
+      return 'Unknown email failure';
     }
   }
 }
