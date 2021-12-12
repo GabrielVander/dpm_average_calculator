@@ -37,6 +37,7 @@ class InputSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: GradeInput(
+                    index: 1,
                     labelText: '1st Grade',
                     showErrorMessages: state.showErrorMessages!,
                     grade: state.grades![0],
@@ -47,6 +48,7 @@ class InputSection extends StatelessWidget {
                 ),
                 Expanded(
                   child: GradeInput(
+                    index: 2,
                     labelText: '2nd Grade',
                     showErrorMessages: state.showErrorMessages!,
                     grade: state.grades![1],
@@ -57,6 +59,7 @@ class InputSection extends StatelessWidget {
                 ),
                 Expanded(
                   child: GradeInput(
+                    index: 3,
                     labelText: '3rd Grade',
                     showErrorMessages: state.showErrorMessages!,
                     grade: state.grades![2],
@@ -167,12 +170,14 @@ class EmailInput extends StatelessWidget {
 }
 
 class GradeInput extends StatelessWidget {
+  final int index;
   final String labelText;
   final bool showErrorMessages;
   final Grade grade;
 
   const GradeInput({
     Key? key,
+    required this.index,
     required this.labelText,
     required this.showErrorMessages,
     required this.grade,
@@ -183,7 +188,7 @@ class GradeInput extends StatelessWidget {
     return TextField(
       keyboardType: TextInputType.number,
       onChanged: (input) =>
-          context.read<CalculatorCubit>().onGradeChange(grade, input),
+          context.read<CalculatorCubit>().onGradeChange(index, input),
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         labelText: labelText,

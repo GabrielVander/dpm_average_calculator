@@ -20,14 +20,18 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     ));
   }
 
-  onGradeChange(Grade grade, String input) {
+  onGradeChange(int index, String input) {
     emit(state.copyWith(
-      grades: state.grades!.map((e) => e == grade ? Grade(input) : e).toList(),
+      grades: state.grades!
+          .map((e) => e.index == index ? Grade(index, input) : e)
+          .toList(),
       showErrorMessages: true,
     ));
   }
 
   void onCalculate() {
-    emit(CalculatorState.onCalculateResult());
+    emit(state.copyWith(
+      showResult: true,
+    ));
   }
 }

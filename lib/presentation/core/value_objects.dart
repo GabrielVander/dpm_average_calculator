@@ -37,11 +37,14 @@ class Grade extends ValueObject<double> {
   @override
   final Either<ValueFailure<double>, double> value;
 
-  factory Grade(String input) {
+  final int index;
+
+  factory Grade(int index, String input) {
     return Grade._(
+      index,
       validateGrade(input),
     );
   }
 
-  const Grade._(this.value);
+  const Grade._(this.index, this.value);
 }

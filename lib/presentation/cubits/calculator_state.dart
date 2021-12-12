@@ -18,23 +18,11 @@ abstract class CalculatorState with _$CalculatorState {
         name: Name(''),
         emailAddress: EmailAddress(''),
         grades: [
-          Grade(''),
-          Grade(''),
-          Grade(''),
+          Grade(1, ''),
+          Grade(2, ''),
+          Grade(3, ''),
         ],
         showErrorMessages: false,
         showResult: false,
-      );
-
-  factory CalculatorState.onCalculateResult() => CalculatorState(
-        name: Name(''),
-        emailAddress: EmailAddress(''),
-        grades: [
-          Grade(''),
-          Grade(''),
-          Grade(''),
-        ],
-        showErrorMessages: null,
-        showResult: true,
       );
 }
