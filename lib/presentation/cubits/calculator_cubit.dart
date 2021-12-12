@@ -26,4 +26,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       showErrorMessages: true,
     ));
   }
+
+  void onCalculate() {
+    emit(CalculatorState.onCalculateResult());
+  }
 }

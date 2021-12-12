@@ -11,7 +11,7 @@ abstract class CalculatorState with _$CalculatorState {
     @required EmailAddress? emailAddress,
     @required List<Grade>? grades,
     @required bool? showErrorMessages,
-    @required bool? isCalculating,
+    @required bool? showResult,
   }) = _CalculatorState;
 
   factory CalculatorState.initial() => CalculatorState(
@@ -23,6 +23,18 @@ abstract class CalculatorState with _$CalculatorState {
           Grade(''),
         ],
         showErrorMessages: false,
-        isCalculating: false,
+        showResult: false,
+      );
+
+  factory CalculatorState.onCalculateResult() => CalculatorState(
+        name: Name(''),
+        emailAddress: EmailAddress(''),
+        grades: [
+          Grade(''),
+          Grade(''),
+          Grade(''),
+        ],
+        showErrorMessages: null,
+        showResult: true,
       );
 }

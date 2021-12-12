@@ -73,7 +73,9 @@ class InputSection extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<CalculatorCubit>().onCalculate();
+                      },
                       child: const Text("Calculate average"),
                     ),
                   ),
