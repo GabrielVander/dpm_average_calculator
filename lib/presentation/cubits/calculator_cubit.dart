@@ -34,4 +34,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
       showResult: true,
     ));
   }
+
+  void onClearFields() {
+    emit(CalculatorState.initial());
+  }
 }

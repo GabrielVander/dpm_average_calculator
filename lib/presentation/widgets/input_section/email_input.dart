@@ -17,7 +17,16 @@ class EmailInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController();
+    controller.text = emailAddress.value.fold((l) {
+      return l is InvalidEmail ? l.failedValue : '';
+    }, (r) => r);
+    controller.selection = TextSelection.fromPosition(
+      TextPosition(offset: controller.text.length),
+    );
+
     return TextField(
+      controller: controller,
       onChanged: onEmailChanged,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),

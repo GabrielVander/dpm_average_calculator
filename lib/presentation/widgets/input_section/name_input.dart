@@ -17,7 +17,14 @@ class NameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController();
+    controller.text = name.value.fold((l) => '', (r) => r);
+    controller.selection = TextSelection.fromPosition(
+      TextPosition(offset: controller.text.length),
+    );
+
     return TextField(
+      controller: controller,
       onChanged: onNameChanged,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),

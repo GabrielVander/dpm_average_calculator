@@ -22,34 +22,40 @@ class MainPage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Average calculator',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              SizedBox(
-                height: widgetSpacing,
-              ),
-              InputSection(
-                widgetSpacing: widgetSpacing,
-              ),
-              SizedBox(
-                height: widgetSpacing,
-              ),
-              BlocBuilder<CalculatorCubit, CalculatorState>(
-                builder: (context, CalculatorState state) {
-                  return state.showResult!
+          child: BlocBuilder<CalculatorCubit, CalculatorState>(
+            builder: (context, state) {
+              return Column(
+                children: <Widget>[
+                  Text(
+                    'Average calculator',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  SizedBox(
+                    height: widgetSpacing,
+                  ),
+                  InputSection(
+                    name: state.name!,
+                    emailAddress: state.emailAddress!,
+                    grades: state.grades!,
+                    showErrorMessages: state.showErrorMessages!,
+                    widgetSpacing: widgetSpacing,
+                  ),
+                  SizedBox(
+                    height: widgetSpacing,
+                  ),
+                  state.showResult!
                       ? ResultSection(
                           name: state.name!,
                           emailAddress: state.emailAddress!,
                           grades: state.grades!,
                           widgetSpacing: widgetSpacing,
+                          onClearFields: () =>
+                              context.read<CalculatorCubit>().onClearFields(),
                         )
-                      : Container();
-                },
-              )
-            ],
+                      : Container()
+                ],
+              );
+            },
           ),
         ),
       ),

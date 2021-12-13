@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class GradeInput extends StatelessWidget {
-  final int index;
   final String labelText;
   final bool showErrorMessages;
   final Grade grade;
@@ -12,7 +11,6 @@ class GradeInput extends StatelessWidget {
 
   const GradeInput({
     Key? key,
-    required this.index,
     required this.labelText,
     required this.showErrorMessages,
     required this.grade,
@@ -21,9 +19,21 @@ class GradeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController();
+    controller.text = grade.value.fold((l) {
+      if (l is InvalidGrade) return l.failedValue.toString();
+      if (l is GradeAboveMaxLimit) return l.failedValue.toString();
+      if (l is GradeBelowMinLimit) return l.failedValue.toString();
+      return '';
+    }, (r) => r.toString());
+    controller.selection = TextSelection.fromPosition(
+      TextPosition(offset: controller.text.length),
+    );
+
     return TextField(
+      controller: controller,
       keyboardType: TextInputType.number,
-      onChanged: (input) => onGradeChanged(index, input),
+      onChanged: (input) => onGradeChanged(grade.index, input),
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         labelText: labelText,
