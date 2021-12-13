@@ -30,12 +30,26 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   }
 
   void onCalculate() {
-    emit(state.copyWith(
-      showResult: true,
-    ));
+    if (_isFormValid()) {
+      emit(state.copyWith(
+        showResult: true,
+      ));
+    }
   }
 
   void onClearFields() {
     emit(CalculatorState.initial());
+  }
+
+  bool _isFormValid() {
+    if (state.name == null ||
+        state.emailAddress == null ||
+        state.grades == null) {
+      return false;
+    }
+
+    return state.name!.value.isRight() &&
+        state.emailAddress!.value.isRight() &&
+        state.grades!.every((element) => element.value.isRight());
   }
 }
